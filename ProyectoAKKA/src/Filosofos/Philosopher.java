@@ -16,21 +16,23 @@ public class Philosopher extends Thread {
     String state;
     ActorSystem actorSystem;
     ActorRef actorPhilosopher;
-    
-
+    static String estado[] = {"Pensando", "Comiendo"};
+    Philosopher derecho, izquierda;
+        
     public Philosopher( ) {
         nEat = 0;
     }
 
-    public Philosopher(Integer id, Table table) {
+    public Philosopher(Integer id, Table table, ActorSystem as) {
         this( );
         this.id = id;
         this.table = table;
-        this.state = "Pensando";
-        actorSystem = ActorSystem.create( "Actor"+id );
+        this.state = estado[0];
+        actorSystem = as;
         actorPhilosopher = actorSystem.actorOf(
                             Props.create(PhilosopherActor.class), "Actor"+id);
     }
+    
     
     @Override
     public void run ( ) {
@@ -48,6 +50,12 @@ public class Philosopher extends Thread {
             System.out.println("Esperando el filosofo con id: " + id);
             
             //Preguntar si se puede comer
+            Boolean vecinoDer = false, vecinoIzq = false;
+            
+            while( !vecinoDer && !vecinoIzq ){
+                derecho.actorPhilosopher.tell( vecinoDer, null);
+                izquierda.actorPhilosopher.tell( vecinoDer, null);
+            }
             
             if( id%2==0 ) {
                 table.getChopstick()[id] = true;
@@ -56,9 +64,10 @@ public class Philosopher extends Thread {
                 table.getChopstick()[(id+1)%table.getTam()] = true;
                 table.getChopstick()[id] = true;
             }
-
+            
             System.out.println( "Comiendo el filosofo con id: " + id );
             //Comiendo
+            state = estado[1];
             //while( aux%5!=0 ) {
                 //aux = rand.nextInt( 1000 )+1;
             //    System.out.println("*"+aux+" "+id);
@@ -77,5 +86,23 @@ public class Philosopher extends Thread {
         
         
     }
+
+    public Philosopher getDerecho() {
+        return derecho;
+    }
+
+    public void setDerecho(Philosopher derecho) {
+        this.derecho = derecho;
+    }
+
+    public Philosopher getIzquierda() {
+        return izquierda;
+    }
+
+    public void setIzquierda(Philosopher izquierda) {
+        this.izquierda = izquierda;
+    }
+    
+    
     
 }

@@ -1,5 +1,6 @@
 package Filosofos;
 
+import akka.actor.ActorSystem;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +15,7 @@ public class DiningPhilosophers {
         
         Scanner in = new Scanner(System.in);
         int n;
-        
+        ActorSystem system = ActorSystem.create( "Actor" );
         System.out.print("Ingrese el numero de Filosofos: ");
         n = in.nextInt();
         
@@ -23,7 +24,7 @@ public class DiningPhilosophers {
         
         //Creando Filosofos
         for( int i = 0; i < n; i++ ){
-            philosophers[i] = new Philosopher(i, chopStick);
+            philosophers[i] = new Philosopher(i, chopStick, system);
         }
         
         //Comenzando Filosofos
@@ -33,14 +34,9 @@ public class DiningPhilosophers {
         
         
         //Terminando
-        for( int i = 0; i < n; i++ ){
-            try {
-                philosophers[i].join();
-            } catch (InterruptedException ex) {
-                System.out.println("Fallo en el Join "+i);
-                Logger.getLogger(DiningPhilosophers.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        system.shutdown();
+
+        system.awaitTermination();
         
         System.out.println("***********************************************");
         for( int i = 0; i < n; i++ ){
