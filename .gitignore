@@ -1,0 +1,6 @@
+*.class
+*.properties
+ProyectoAKKA/build.xml
+ProyectoAKKA/build/classes/.netbeans_automatic_build
+ProyectoAKKA/build/classes/.netbeans_update_resources
+ProyectoAKKA/manifest.mf
