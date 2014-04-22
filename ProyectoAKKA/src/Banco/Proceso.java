@@ -25,12 +25,11 @@ public class Proceso extends Thread {
     public void run() {
 
         for (int k = 0; k < transacciones.length; k++) {
-            
+
             procesoActor.tell(transacciones[k], null);
-            //System.out.println("numero: " + cuenta + " id: " + id);
+
         }
-        //System.out.println("en lo que termino el numero " + cuenta.numero);
-        //System.out.println("Este proceso ha terminado:" + this.getName());
+
     }
 
     public Integer[] getTransacciones() {
@@ -40,6 +39,6 @@ public class Proceso extends Thread {
     public void setTransacciones(Integer[] transacciones) {
         this.transacciones = transacciones;
     }
-    
-    
+
+
 }

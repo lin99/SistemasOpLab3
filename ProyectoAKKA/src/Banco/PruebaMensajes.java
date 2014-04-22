@@ -15,10 +15,10 @@ import java.util.logging.Logger;
  * @author w7
  */
 public class PruebaMensajes {
-    
+
     public static void main( String args[] ) throws IOException{
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        //bf.readLine();
+        //Clase donde se realiza la prueba del ejercicio usando mensajes
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));s
 
         ActorSystem system = ActorSystem.create("Banco");
         int a = Integer.parseInt(bf.readLine().trim());
@@ -44,7 +44,7 @@ public class PruebaMensajes {
         ProcesoConMensajes.cuenta = numero;
         Props props = Props.create(ProcesoConMensajes.class);
         actor = system.actorOf( props, "Transaccion");
-        
+
         Proceso hilo1 = new Proceso(numero, 0, actor);
 
         Proceso hilo2 = new Proceso(numero, 1, actor);
@@ -66,7 +66,7 @@ public class PruebaMensajes {
         }
 
         System.out.println("Cuenta final: " + numero);
-        
+
     }
-    
+
 }

@@ -7,6 +7,9 @@ package Banco;
 public class Cuenta {
     int numero;
 
+    /**
+     *Constructor de la cuenta con el valor inicial.
+     */
     public Cuenta(int numero) {
         this.numero = numero;
     }
@@ -23,5 +26,5 @@ public class Cuenta {
     public String toString() {
         return "Cuenta{" + "numero=" + numero + '}';
     }
-    
+
 }
