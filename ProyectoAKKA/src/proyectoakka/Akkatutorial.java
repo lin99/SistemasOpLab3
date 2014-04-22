@@ -20,7 +20,7 @@ public class Akkatutorial {
 
         ActorRef helloActor;
         helloActor = system.actorOf( Props.create(HelloActor.class), "hola");
-
+        
         helloActor.tell("hello", null);
 
         helloActor.tell("chao", null);
